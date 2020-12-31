@@ -1,6 +1,9 @@
 package com.springboot.carstore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Car {
+    @JsonIgnore
     private int  id;
     private String name;
     private String price;
@@ -29,12 +32,5 @@ public class Car {
         this.price = price;
     }
 
-    public Car(int id, String name, String price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-    }
-
-    
     
 }

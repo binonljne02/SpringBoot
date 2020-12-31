@@ -10,7 +10,6 @@ public class RepoConfig {
 
     @Bean
     public CarDao carDao(){
-        return new CarDao();
+        return new CarDao("car.csv");
     }
-    
 }

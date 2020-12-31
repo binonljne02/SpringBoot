@@ -12,5 +12,6 @@ public abstract class Dao<T> {
     public abstract void add(T t);
     public abstract void update(T t);
     public abstract void deleteById(int id);
-    public abstract void delete(T t);   
+    public abstract void delete(T t);
+    public abstract void readCSV(String csvFile);   
 }
