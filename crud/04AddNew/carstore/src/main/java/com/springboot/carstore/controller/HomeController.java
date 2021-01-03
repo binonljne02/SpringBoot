@@ -35,5 +35,19 @@ public class HomeController {
         return "car";
     }
 
+    @GetMapping("/add")
+    public String add(Model model) {
+      model.addAttribute("car", new Car()); 
+      return "form";
+    }
+  
+    @PostMapping("/save")
+    public String save(Car car, BindingResult result) {
+      if (result.hasErrors()) {
+        return "form";
+      }
+      carDao.add(car);
+      return "redirect:/car";
+    }
 }
 

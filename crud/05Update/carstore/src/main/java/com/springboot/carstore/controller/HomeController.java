@@ -35,5 +35,39 @@ public class HomeController {
         return "car";
     }
 
+    @GetMapping("/add")
+    public String add(Model model) {
+      model.addAttribute("car", new Car()); 
+      return "form";
+    }
+  
+    @PostMapping("/save")
+    public String save(Car car, BindingResult result) {
+      if (result.hasErrors()) {
+        return "form";
+      }
+      if(car.getId() >0){
+        carDao.update(car);
+      }
+      else{
+        carDao.add(car);
+      }
+      return "redirect:/car";
+    }
+
+    @GetMapping(value="/edit/{id}")
+    public String editCarID(@PathVariable("id") int id,Model model){
+      Optional<Car> car =carDao.get(id);
+      if(car.isPresent()){
+        model.addAttribute("car",car.get());
+      }
+      return "form";
+    }
+
+    @GetMapping(value = "/delete/{id}")
+    public String deleteByID(@PathVariable("id") int id){
+      carDao.deleteByID(id);
+      return "redirect:/car";
+    }
 }
 
