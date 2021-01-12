@@ -29,8 +29,7 @@ public class CarDao extends Dao<Car> {
     }
 
     @Override
-    public Optional<Car> get(int id) {
-        // TODO Auto-generated method stub
+    public Optional get(int id) {
         return collections.stream().filter(u -> u.getId() == id).findFirst();
     }
 
@@ -49,44 +48,40 @@ public class CarDao extends Dao<Car> {
 
     @Override
     public void update(Car car) {
-        // TODO Auto-generated method stub
+        //TODO
+        get(car.getId()).ifPresent(existcar ->{
+            ((Car) existcar).setName(car.getName());
+            ((Car) existcar).setPrice(car.getPrice());
+        });
 
-    }
-
+  }
     @Override
-    public void deleteById(int id) {
-        // TODO Auto-generated method stub
-
+    public void deleteByID(int id) {
+        get(id).ifPresent(existcar -> collections.remove(existcar));
     }
 
     @Override
     public void delete(Car car) {
         // TODO Auto-generated method stub
-
+        deleteByID(car.getId());
     }
 
     @Override
     public void readCSV(String csvFile) {
         try {
             File file = ResourceUtils.getFile("classpath:static/" + csvFile);
-            CsvMapper mapper = new CsvMapper(); // dùng để ánh xạ từng cột trong csv vời từng trường trong POJO
-            CsvSchema schema = CsvSchema.emptySchema().withHeader().withColumnSeparator('|'); // dòng đều tiên được
-                                                                                              // tách ra để làm
-                                                                                              // header.
-                                                                                              // withColumSeparator
-                                                                                              // trong csv dùng | để
-                                                                                              // phân tách các phần
-            ObjectReader oReader = mapper.readerFor(Car.class).with(schema); // cấu hình file csv với kiểu Car
+            CsvMapper mapper = new CsvMapper(); 
+            CsvSchema schema = CsvSchema.emptySchema().withHeader().withColumnSeparator('|'); 
+            ObjectReader oReader = mapper.readerFor(Car.class).with(schema); 
             Reader reader = new FileReader(file);
-
-            MappingIterator<Car> mi = oReader.readValues(reader); // Iterator đọc từng dòng trong file
+            MappingIterator<Car> mi = oReader.readValues(reader); 
             while (mi.hasNext()) {
-                Car car = mi.next();
-                this.add(car);
+              Car car = mi.next();
+              this.add(car);
             }
-        } catch (IOException e) {
-            System.out.print(e);
-        }
+          } catch (IOException e) {
+            System.out.println(e);   
+          }
 
     }
 

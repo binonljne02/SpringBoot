@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/car"> Trang chủ</a>
+    <a href="/car/add">Thêm mới</a>
+    <a href="/car/search">Tìm kiếm</a>
+   <ul>
+       <li th:each = "car :${cars}">
+           <a th:href = "@{/car/{id}(id=${car.id})}"><strong th:text ="${car.name}"></strong></a>
+           <p th:text = "${car.price}"></p>
+       </li>
+   </ul>
+</body>
+</html>
